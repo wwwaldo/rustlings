@@ -10,6 +10,10 @@ trait OtherTrait {
     }
 }
 
+// only works for concrete types (struct enum or union(?))
+// #[derive(SomeTrait, OtherTrait)]
+// trait CombinedTrait;
+
 struct SomeStruct;
 impl SomeTrait for SomeStruct {}
 impl OtherTrait for SomeStruct {}
@@ -18,8 +22,12 @@ struct OtherStruct;
 impl SomeTrait for OtherStruct {}
 impl OtherTrait for OtherStruct {}
 
+// junion MyUnion {
+// 
+// }
+
 // TODO: Fix the compiler error by only changing the signature of this function.
-fn some_func(item: ???) -> bool {
+fn some_func(item: impl SomeTrait + OtherTrait) -> bool {
     item.some_function() && item.other_function()
 }
 
